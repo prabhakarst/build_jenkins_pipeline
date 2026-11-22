@@ -16,14 +16,14 @@ pipeline {
     stages {
         stage('Install') {
             steps {
-                sh 'npm ci'
-                sh 'npx playwright install --with-deps chromium'
+                bat 'npm ci'
+                bat 'npx playwright install chromium'
             }
         }
 
         stage('Playwright tests') {
             steps {
-                sh 'npx playwright test --project=chromium'
+                bat 'npx playwright test --project=chromium'
             }
         }
     }

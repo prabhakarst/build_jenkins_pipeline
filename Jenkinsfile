@@ -31,6 +31,7 @@ pipeline {
     post {
         always {
             publishHTML(target: [
+                reportName: 'Playwright HTML Report',
                 reportDir: 'playwright-report',
                 reportFiles: 'index.html',
                 keepAll: true,

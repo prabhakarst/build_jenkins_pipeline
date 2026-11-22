@@ -1,16 +1,29 @@
-
 pipeline {
+    agent any
+
+    parameters {
+        string(
+            name: 'BROWSER',
+            defaultValue: 'chromium',
+            description: 'Target Playwright browser project'
+        )
+    }
+
+    environment {
+        CI = 'true'
+    }
+
     stages {
         stage('Install') {
             steps {
                 sh 'npm ci'
-                sh 'npx playwright install'
+                sh 'npx playwright install --with-deps chromium'
             }
         }
 
         stage('Playwright tests') {
             steps {
-                sh "npx playwright test --project=${param.BROWSER}"
+                sh 'npx playwright test --project=chromium'
             }
         }
     }
@@ -21,7 +34,7 @@ pipeline {
                 reportDir: 'playwright-report',
                 reportFiles: 'index.html',
                 keepAll: true,
-                alwaysLinkToLastBuild: true
+                alwaysLinkToLastBuild: true,
                 allowMissing: true
             ])
         }
